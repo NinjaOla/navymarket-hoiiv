@@ -1,0 +1,137 @@
+### Token scripted locs (used by meta_effect for transfer_ship type resolution)
+defined_text = {
+    name = get_buy_ship_type
+    text = {
+        trigger = { check_variable = { buy_type_id = 1 } }
+        localization_key = "ship_token_carrier"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 2 } }
+        localization_key = "ship_token_battleship"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 3 } }
+        localization_key = "ship_token_battle_cruiser"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 4 } }
+        localization_key = "ship_token_heavy_cruiser"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 5 } }
+        localization_key = "ship_token_light_cruiser"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 6 } }
+        localization_key = "ship_token_destroyer"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 7 } }
+        localization_key = "ship_token_submarine"
+    }
+}
+
+defined_text = {
+    name = get_sale_ship_type
+    text = {
+        trigger = { check_variable = { sale_type_id = 1 } }
+        localization_key = "ship_token_carrier"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 2 } }
+        localization_key = "ship_token_battleship"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 3 } }
+        localization_key = "ship_token_battle_cruiser"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 4 } }
+        localization_key = "ship_token_heavy_cruiser"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 5 } }
+        localization_key = "ship_token_light_cruiser"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 6 } }
+        localization_key = "ship_token_destroyer"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 7 } }
+        localization_key = "ship_token_submarine"
+    }
+}
+
+### Display name scripted locs (used by GUI for "Selected: [type]" labels)
+defined_text = {
+    name = get_sale_ship_type_display
+    text = {
+        trigger = { check_variable = { sale_type_id = 1 } }
+        localization_key = "SHIP_MARKET_CARRIER"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 2 } }
+        localization_key = "SHIP_MARKET_BATTLESHIP"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 3 } }
+        localization_key = "SHIP_MARKET_BATTLE_CRUISER"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 4 } }
+        localization_key = "SHIP_MARKET_HEAVY_CRUISER"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 5 } }
+        localization_key = "SHIP_MARKET_LIGHT_CRUISER"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 6 } }
+        localization_key = "SHIP_MARKET_DESTROYER"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 7 } }
+        localization_key = "SHIP_MARKET_SUBMARINE"
+    }
+    text = {
+        trigger = { always = yes }
+        localization_key = "SHIP_MARKET_NONE_SELECTED"
+    }
+}
+
+defined_text = {
+    name = get_buy_ship_type_display
+    text = {
+        trigger = { check_variable = { buy_type_id = 1 } }
+        localization_key = "SHIP_MARKET_CARRIER"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 2 } }
+        localization_key = "SHIP_MARKET_BATTLESHIP"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 3 } }
+        localization_key = "SHIP_MARKET_BATTLE_CRUISER"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 4 } }
+        localization_key = "SHIP_MARKET_HEAVY_CRUISER"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 5 } }
+        localization_key = "SHIP_MARKET_LIGHT_CRUISER"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 6 } }
+        localization_key = "SHIP_MARKET_DESTROYER"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 7 } }
+        localization_key = "SHIP_MARKET_SUBMARINE"
+    }
+    text = {
+        trigger = { always = yes }
+        localization_key = "SHIP_MARKET_NONE_SELECTED"
+    }
+}

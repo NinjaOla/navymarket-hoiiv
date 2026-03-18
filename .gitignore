@@ -1,0 +1,4 @@
+# Dot directories (documentation, examples, Claude config)
+.claude/
+.documentation/
+.examples/

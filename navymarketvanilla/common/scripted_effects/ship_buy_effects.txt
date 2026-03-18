@@ -1,0 +1,97 @@
+### Buyer-side scripted effects for Ship Market
+
+# Finds all countries with selling_ships flag, populates seller_list array
+populate_seller_slots = {
+	clear_array = seller_list
+	every_country = {
+		limit = {
+			has_country_flag = selling_ships
+			NOT = { tag = ROOT }
+		}
+		ROOT = {
+			add_to_array = { seller_list = PREV }
+		}
+	}
+}
+
+# Copies selected seller's listing variables to buyer scope for GUI display
+load_seller_listings = {
+	clear_array = selected_seller_list
+	add_to_array = { selected_seller_list = selected_seller }
+	var:selected_seller = {
+		ROOT = {
+			set_variable = { buy_avail_carrier = PREV.ships_selling_carrier }
+			set_variable = { buy_avail_battleship = PREV.ships_selling_battleship }
+			set_variable = { buy_avail_battle_cruiser = PREV.ships_selling_battle_cruiser }
+			set_variable = { buy_avail_heavy_cruiser = PREV.ships_selling_heavy_cruiser }
+			set_variable = { buy_avail_light_cruiser = PREV.ships_selling_light_cruiser }
+			set_variable = { buy_avail_destroyer = PREV.ships_selling_destroyer }
+			set_variable = { buy_avail_submarine = PREV.ships_selling_submarine }
+		}
+	}
+}
+
+# Executes ship transfer from seller to buyer using meta_effect for dynamic type
+execute_ship_purchase = {
+	set_variable = { buy_transfer_count = buy_quantity }
+	meta_effect = {
+		text = {
+			while_loop_effect = {
+				limit = { check_variable = { buy_transfer_count > 0 } }
+				var:selected_seller = {
+					transfer_ship = { type = [T] target = ROOT prefer_name = "SALE" }
+				}
+				subtract_from_variable = { buy_transfer_count = 1 }
+			}
+			var:selected_seller = {
+				subtract_from_variable = { ships_selling_[T] = ROOT.buy_quantity }
+				if = {
+					limit = {
+						NOT = { check_variable = { ships_selling_[T] > 0 } }
+					}
+					clear_variable = ships_selling_[T]
+				}
+				if = {
+					limit = {
+						NOT = {
+							OR = {
+								check_variable = { ships_selling_carrier > 0 }
+								check_variable = { ships_selling_battleship > 0 }
+								check_variable = { ships_selling_battle_cruiser > 0 }
+								check_variable = { ships_selling_heavy_cruiser > 0 }
+								check_variable = { ships_selling_light_cruiser > 0 }
+								check_variable = { ships_selling_destroyer > 0 }
+								check_variable = { ships_selling_submarine > 0 }
+							}
+						}
+					}
+					clr_country_flag = selling_ships
+				}
+			}
+			subtract_from_variable = { buy_avail_[T] = buy_quantity }
+		}
+		T = "[Root.get_buy_ship_type]"
+	}
+	log = "Ship market: [Root.GetTag] bought [?buy_quantity] [Root.get_buy_ship_type] from [var:selected_seller.GetTag]"
+}
+
+# Clears all buyer GUI variables
+clear_buy_market_vars = {
+	clr_country_flag = buy_market_open
+	clear_variable = buy_phase
+	clear_array = seller_list
+	clear_array = selected_seller_list
+	clear_variable = selected_seller
+	clear_variable = buy_avail_carrier
+	clear_variable = buy_avail_battleship
+	clear_variable = buy_avail_battle_cruiser
+	clear_variable = buy_avail_heavy_cruiser
+	clear_variable = buy_avail_light_cruiser
+	clear_variable = buy_avail_destroyer
+	clear_variable = buy_avail_submarine
+	clear_variable = buy_type_id
+	clear_variable = buy_quantity
+	clear_variable = buy_max_available
+	clear_variable = buy_transfer_count
+	clear_variable = buy_gui_dirty
+}

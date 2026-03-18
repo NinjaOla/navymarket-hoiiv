@@ -1,0 +1,32 @@
+ship_market_category = {
+	open_ship_market = {
+
+		available = {
+			NOT = { has_country_flag = ship_market_open }
+			has_navy_size = { size > 0 }
+		}
+
+		complete_effect = {
+			set_country_flag = ship_market_open
+			set_variable = { sale_type_id = 0 }
+			set_variable = { ships_for_sale = 0 }
+		}
+	}
+
+	browse_ship_market = {
+
+		available = {
+			NOT = { has_country_flag = buy_market_open }
+			any_owned_state = { is_coastal = yes }
+		}
+
+		complete_effect = {
+			set_country_flag = buy_market_open
+			set_variable = { buy_phase = 1 }
+			set_variable = { buy_type_id = 0 }
+			set_variable = { buy_quantity = 0 }
+			set_variable = { buy_max_available = 0 }
+			populate_seller_slots = yes
+		}
+	}
+}

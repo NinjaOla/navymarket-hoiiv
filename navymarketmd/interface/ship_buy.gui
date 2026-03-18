@@ -1,0 +1,857 @@
+guiTypes = {
+
+	### ===================== PHASE 1: Seller List =====================
+	containerWindowType = {
+		name = "ship_buy_sellers_window"
+		position = { x = -225 y = -280 }
+		size = { width = 450 height = 560 }
+		orientation = center
+		moveable = yes
+
+		background = {
+			name = "Background"
+			spriteType = "GFX_tiled_window_1b_border"
+		}
+
+		# Close button
+		buttonType = {
+			name = "buy_close_button"
+			position = { x = -45 y = 12 }
+			quadTextureSprite = "GFX_closebutton"
+			orientation = "UPPER_RIGHT"
+			clicksound = click_close
+			shortcut = "ESCAPE"
+		}
+
+		# Title
+		instantTextBoxType = {
+			name = "sellers_title"
+			position = { x = 50 y = 15 }
+			font = "hoi_36header"
+			text = "SHIP_BUY_TITLE_SELLERS"
+			maxWidth = 350
+			maxHeight = 40
+			format = centre
+		}
+
+		# Instructions
+		instantTextBoxType = {
+			name = "sellers_instructions"
+			position = { x = 20 y = 55 }
+			font = "hoi_18mbs"
+			text = "SHIP_BUY_SELLER_LABEL"
+			maxWidth = 410
+			maxHeight = 30
+			format = centre
+		}
+
+		# No sellers message
+		instantTextBoxType = {
+			name = "no_sellers_text"
+			position = { x = 20 y = 150 }
+			font = "hoi_18mbs"
+			text = "SHIP_BUY_NO_SELLERS"
+			maxWidth = 410
+			maxHeight = 30
+			format = centre
+		}
+
+		# Scrollable seller list via dynamic_lists gridbox
+		containerWindowType = {
+			name = "seller_grid_container"
+			position = { x = 20 y = 90 }
+			size = { width = 415 height = 380 }
+			verticalScrollbar = "right_vertical_slider"
+			scroll_wheel_factor = 40
+			smooth_scrolling = yes
+
+			background = {
+				name = "Background"
+				quadTextureSprite = "GFX_tiled_window_transparent"
+			}
+
+			gridBoxType = {
+				name = "seller_grid_box"
+				position = { x = 0 y = 0 }
+				size = { width = 100%% height = 100%% }
+				slotsize = { width = 400 height = 35 }
+				format = "UPPER_LEFT"
+				max_slots_horizontal = 1
+			}
+		}
+
+		# Cancel button (phase 1)
+		buttonType = {
+			name = "buy_cancel_p1_button"
+			position = { x = 160 y = 500 }
+			quadTextureSprite = "GFX_button_123x34"
+			buttonFont = "hoi_16mbs"
+			buttonText = "SHIP_BUY_CANCEL"
+			clicksound = click_close
+		}
+	}
+
+	### ===================== PHASE 2: Type Selection =====================
+	containerWindowType = {
+		name = "ship_buy_types_window"
+		position = { x = -225 y = -280 }
+		size = { width = 450 height = 735 }
+		orientation = center
+		moveable = yes
+
+		background = {
+			name = "Background"
+			spriteType = "GFX_tiled_window_1b_border"
+		}
+
+		# Close button
+		buttonType = {
+			name = "buy_close_button"
+			position = { x = -45 y = 12 }
+			quadTextureSprite = "GFX_closebutton"
+			orientation = "UPPER_RIGHT"
+			clicksound = click_close
+			shortcut = "ESCAPE"
+		}
+
+		# Title
+		instantTextBoxType = {
+			name = "types_title"
+			position = { x = 50 y = 15 }
+			font = "hoi_36header"
+			text = "SHIP_BUY_TITLE_TYPES"
+			maxWidth = 350
+			maxHeight = 40
+			format = centre
+		}
+
+		# Selected seller display — uses 1-element gridbox with change_scope
+		# because var: scope promotion does not work in localisation
+		instantTextBoxType = {
+			name = "buying_from_label"
+			position = { x = 20 y = 55 }
+			font = "hoi_18mbs"
+			text = "SHIP_BUY_BUYING_FROM"
+			maxWidth = 130
+			maxHeight = 25
+			format = left
+		}
+		containerWindowType = {
+			name = "seller_name_grid_container"
+			position = { x = 155 y = 50 }
+			size = { width = 260 height = 30 }
+
+			gridBoxType = {
+				name = "seller_name_grid_box"
+				position = { x = 0 y = 0 }
+				size = { width = 100%% height = 100%% }
+				slotsize = { width = 260 height = 30 }
+				format = "UPPER_LEFT"
+				max_slots_horizontal = 1
+			}
+		}
+
+		### Ship type buttons — mirrors seller GUI layout
+		# Carrier
+		containerWindowType = {
+			name = "buy_type_carrier_container"
+			position = { x = 20 y = 80 }
+			size = { width = 410 height = 35 }
+
+			buttonType = {
+				name = "buy_type_carrier_button"
+				position = { x = 0 y = 0 }
+				spriteType = "GFX_tiling_sort_button"
+				frame = 1
+				size = { x = 300 y = 30 }
+				clicksound = click_checkbox
+			}
+			instantTextBoxType = {
+				name = "buy_type_carrier_text"
+				position = { x = 10 y = 5 }
+				font = "hoi_18mbs"
+				text = "SHIP_MARKET_CARRIER"
+				maxWidth = 280
+				maxHeight = 25
+				fixedsize = yes
+				alwaystransparent = yes
+			}
+			iconType = {
+				name = "buy_type_carrier_selected"
+				position = { x = 270 y = 5 }
+				spriteType = "GFX_checkbox_default"
+				frame = 2
+				alwaystransparent = yes
+			}
+			instantTextBoxType = {
+				name = "buy_type_carrier_avail"
+				position = { x = 310 y = 5 }
+				font = "hoi_18mbs"
+				text = "([?buy_avail_carrier|0])"
+				maxWidth = 90
+				maxHeight = 25
+				format = left
+				alwaystransparent = yes
+			}
+		}
+
+		# Destroyer
+		containerWindowType = {
+			name = "buy_type_destroyer_container"
+			position = { x = 20 y = 115 }
+			size = { width = 410 height = 35 }
+
+			buttonType = {
+				name = "buy_type_destroyer_button"
+				position = { x = 0 y = 0 }
+				spriteType = "GFX_tiling_sort_button"
+				frame = 1
+				size = { x = 300 y = 30 }
+				clicksound = click_checkbox
+			}
+			instantTextBoxType = {
+				name = "buy_type_destroyer_text"
+				position = { x = 10 y = 5 }
+				font = "hoi_18mbs"
+				text = "SHIP_MARKET_DESTROYER"
+				maxWidth = 280
+				maxHeight = 25
+				fixedsize = yes
+				alwaystransparent = yes
+			}
+			iconType = {
+				name = "buy_type_destroyer_selected"
+				position = { x = 270 y = 5 }
+				spriteType = "GFX_checkbox_default"
+				frame = 2
+				alwaystransparent = yes
+			}
+			instantTextBoxType = {
+				name = "buy_type_destroyer_avail"
+				position = { x = 310 y = 5 }
+				font = "hoi_18mbs"
+				text = "([?buy_avail_destroyer|0])"
+				maxWidth = 90
+				maxHeight = 25
+				format = left
+				alwaystransparent = yes
+			}
+		}
+
+		# Frigate
+		containerWindowType = {
+			name = "buy_type_frigate_container"
+			position = { x = 20 y = 150 }
+			size = { width = 410 height = 35 }
+
+			buttonType = {
+				name = "buy_type_frigate_button"
+				position = { x = 0 y = 0 }
+				spriteType = "GFX_tiling_sort_button"
+				frame = 1
+				size = { x = 300 y = 30 }
+				clicksound = click_checkbox
+			}
+			instantTextBoxType = {
+				name = "buy_type_frigate_text"
+				position = { x = 10 y = 5 }
+				font = "hoi_18mbs"
+				text = "SHIP_MARKET_FRIGATE"
+				maxWidth = 280
+				maxHeight = 25
+				fixedsize = yes
+				alwaystransparent = yes
+			}
+			iconType = {
+				name = "buy_type_frigate_selected"
+				position = { x = 270 y = 5 }
+				spriteType = "GFX_checkbox_default"
+				frame = 2
+				alwaystransparent = yes
+			}
+			instantTextBoxType = {
+				name = "buy_type_frigate_avail"
+				position = { x = 310 y = 5 }
+				font = "hoi_18mbs"
+				text = "([?buy_avail_frigate|0])"
+				maxWidth = 90
+				maxHeight = 25
+				format = left
+				alwaystransparent = yes
+			}
+		}
+
+		# Corvette
+		containerWindowType = {
+			name = "buy_type_corvette_container"
+			position = { x = 20 y = 185 }
+			size = { width = 410 height = 35 }
+
+			buttonType = {
+				name = "buy_type_corvette_button"
+				position = { x = 0 y = 0 }
+				spriteType = "GFX_tiling_sort_button"
+				frame = 1
+				size = { x = 300 y = 30 }
+				clicksound = click_checkbox
+			}
+			instantTextBoxType = {
+				name = "buy_type_corvette_text"
+				position = { x = 10 y = 5 }
+				font = "hoi_18mbs"
+				text = "SHIP_MARKET_CORVETTE"
+				maxWidth = 280
+				maxHeight = 25
+				fixedsize = yes
+				alwaystransparent = yes
+			}
+			iconType = {
+				name = "buy_type_corvette_selected"
+				position = { x = 270 y = 5 }
+				spriteType = "GFX_checkbox_default"
+				frame = 2
+				alwaystransparent = yes
+			}
+			instantTextBoxType = {
+				name = "buy_type_corvette_avail"
+				position = { x = 310 y = 5 }
+				font = "hoi_18mbs"
+				text = "([?buy_avail_corvette|0])"
+				maxWidth = 90
+				maxHeight = 25
+				format = left
+				alwaystransparent = yes
+			}
+		}
+
+		# Cruiser
+		containerWindowType = {
+			name = "buy_type_cruiser_container"
+			position = { x = 20 y = 220 }
+			size = { width = 410 height = 35 }
+
+			buttonType = {
+				name = "buy_type_cruiser_button"
+				position = { x = 0 y = 0 }
+				spriteType = "GFX_tiling_sort_button"
+				frame = 1
+				size = { x = 300 y = 30 }
+				clicksound = click_checkbox
+			}
+			instantTextBoxType = {
+				name = "buy_type_cruiser_text"
+				position = { x = 10 y = 5 }
+				font = "hoi_18mbs"
+				text = "SHIP_MARKET_CRUISER"
+				maxWidth = 280
+				maxHeight = 25
+				fixedsize = yes
+				alwaystransparent = yes
+			}
+			iconType = {
+				name = "buy_type_cruiser_selected"
+				position = { x = 270 y = 5 }
+				spriteType = "GFX_checkbox_default"
+				frame = 2
+				alwaystransparent = yes
+			}
+			instantTextBoxType = {
+				name = "buy_type_cruiser_avail"
+				position = { x = 310 y = 5 }
+				font = "hoi_18mbs"
+				text = "([?buy_avail_cruiser|0])"
+				maxWidth = 90
+				maxHeight = 25
+				format = left
+				alwaystransparent = yes
+			}
+		}
+
+		# Attack Submarine
+		containerWindowType = {
+			name = "buy_type_attack_sub_container"
+			position = { x = 20 y = 255 }
+			size = { width = 410 height = 35 }
+
+			buttonType = {
+				name = "buy_type_attack_sub_button"
+				position = { x = 0 y = 0 }
+				spriteType = "GFX_tiling_sort_button"
+				frame = 1
+				size = { x = 300 y = 30 }
+				clicksound = click_checkbox
+			}
+			instantTextBoxType = {
+				name = "buy_type_attack_sub_text"
+				position = { x = 10 y = 5 }
+				font = "hoi_18mbs"
+				text = "SHIP_MARKET_ATTACK_SUB"
+				maxWidth = 280
+				maxHeight = 25
+				fixedsize = yes
+				alwaystransparent = yes
+			}
+			iconType = {
+				name = "buy_type_attack_sub_selected"
+				position = { x = 270 y = 5 }
+				spriteType = "GFX_checkbox_default"
+				frame = 2
+				alwaystransparent = yes
+			}
+			instantTextBoxType = {
+				name = "buy_type_attack_sub_avail"
+				position = { x = 310 y = 5 }
+				font = "hoi_18mbs"
+				text = "([?buy_avail_attack_submarine|0])"
+				maxWidth = 90
+				maxHeight = 25
+				format = left
+				alwaystransparent = yes
+			}
+		}
+
+		# Missile Submarine
+		containerWindowType = {
+			name = "buy_type_missile_sub_container"
+			position = { x = 20 y = 290 }
+			size = { width = 410 height = 35 }
+
+			buttonType = {
+				name = "buy_type_missile_sub_button"
+				position = { x = 0 y = 0 }
+				spriteType = "GFX_tiling_sort_button"
+				frame = 1
+				size = { x = 300 y = 30 }
+				clicksound = click_checkbox
+			}
+			instantTextBoxType = {
+				name = "buy_type_missile_sub_text"
+				position = { x = 10 y = 5 }
+				font = "hoi_18mbs"
+				text = "SHIP_MARKET_MISSILE_SUB"
+				maxWidth = 280
+				maxHeight = 25
+				fixedsize = yes
+				alwaystransparent = yes
+			}
+			iconType = {
+				name = "buy_type_missile_sub_selected"
+				position = { x = 270 y = 5 }
+				spriteType = "GFX_checkbox_default"
+				frame = 2
+				alwaystransparent = yes
+			}
+			instantTextBoxType = {
+				name = "buy_type_missile_sub_avail"
+				position = { x = 310 y = 5 }
+				font = "hoi_18mbs"
+				text = "([?buy_avail_missile_submarine|0])"
+				maxWidth = 90
+				maxHeight = 25
+				format = left
+				alwaystransparent = yes
+			}
+		}
+
+		# Helicopter Operator
+		containerWindowType = {
+			name = "buy_type_helo_container"
+			position = { x = 20 y = 325 }
+			size = { width = 410 height = 35 }
+
+			buttonType = {
+				name = "buy_type_helo_button"
+				position = { x = 0 y = 0 }
+				spriteType = "GFX_tiling_sort_button"
+				frame = 1
+				size = { x = 300 y = 30 }
+				clicksound = click_checkbox
+			}
+			instantTextBoxType = {
+				name = "buy_type_helo_text"
+				position = { x = 10 y = 5 }
+				font = "hoi_18mbs"
+				text = "SHIP_MARKET_HELO"
+				maxWidth = 280
+				maxHeight = 25
+				fixedsize = yes
+				alwaystransparent = yes
+			}
+			iconType = {
+				name = "buy_type_helo_selected"
+				position = { x = 270 y = 5 }
+				spriteType = "GFX_checkbox_default"
+				frame = 2
+				alwaystransparent = yes
+			}
+			instantTextBoxType = {
+				name = "buy_type_helo_avail"
+				position = { x = 310 y = 5 }
+				font = "hoi_18mbs"
+				text = "([?buy_avail_helicopter_operator|0])"
+				maxWidth = 90
+				maxHeight = 25
+				format = left
+				alwaystransparent = yes
+			}
+		}
+
+		# Battleship
+		containerWindowType = {
+			name = "buy_type_battleship_container"
+			position = { x = 20 y = 360 }
+			size = { width = 410 height = 35 }
+
+			buttonType = {
+				name = "buy_type_battleship_button"
+				position = { x = 0 y = 0 }
+				spriteType = "GFX_tiling_sort_button"
+				frame = 1
+				size = { x = 300 y = 30 }
+				clicksound = click_checkbox
+			}
+			instantTextBoxType = {
+				name = "buy_type_battleship_text"
+				position = { x = 10 y = 5 }
+				font = "hoi_18mbs"
+				text = "SHIP_MARKET_BATTLESHIP"
+				maxWidth = 280
+				maxHeight = 25
+				fixedsize = yes
+				alwaystransparent = yes
+			}
+			iconType = {
+				name = "buy_type_battleship_selected"
+				position = { x = 270 y = 5 }
+				spriteType = "GFX_checkbox_default"
+				frame = 2
+				alwaystransparent = yes
+			}
+			instantTextBoxType = {
+				name = "buy_type_battleship_avail"
+				position = { x = 310 y = 5 }
+				font = "hoi_18mbs"
+				text = "([?buy_avail_battleship|0])"
+				maxWidth = 90
+				maxHeight = 25
+				format = left
+				alwaystransparent = yes
+			}
+		}
+
+		# Battle Cruiser
+		containerWindowType = {
+			name = "buy_type_battle_cruiser_container"
+			position = { x = 20 y = 395 }
+			size = { width = 410 height = 35 }
+
+			buttonType = {
+				name = "buy_type_battle_cruiser_button"
+				position = { x = 0 y = 0 }
+				spriteType = "GFX_tiling_sort_button"
+				frame = 1
+				size = { x = 300 y = 30 }
+				clicksound = click_checkbox
+			}
+			instantTextBoxType = {
+				name = "buy_type_battle_cruiser_text"
+				position = { x = 10 y = 5 }
+				font = "hoi_18mbs"
+				text = "SHIP_MARKET_BATTLE_CRUISER"
+				maxWidth = 280
+				maxHeight = 25
+				fixedsize = yes
+				alwaystransparent = yes
+			}
+			iconType = {
+				name = "buy_type_battle_cruiser_selected"
+				position = { x = 270 y = 5 }
+				spriteType = "GFX_checkbox_default"
+				frame = 2
+				alwaystransparent = yes
+			}
+			instantTextBoxType = {
+				name = "buy_type_battle_cruiser_avail"
+				position = { x = 310 y = 5 }
+				font = "hoi_18mbs"
+				text = "([?buy_avail_battle_cruiser|0])"
+				maxWidth = 90
+				maxHeight = 25
+				format = left
+				alwaystransparent = yes
+			}
+		}
+
+		# Stealth Destroyer
+		containerWindowType = {
+			name = "buy_type_stealth_destroyer_container"
+			position = { x = 20 y = 430 }
+			size = { width = 410 height = 35 }
+
+			buttonType = {
+				name = "buy_type_stealth_destroyer_button"
+				position = { x = 0 y = 0 }
+				spriteType = "GFX_tiling_sort_button"
+				frame = 1
+				size = { x = 300 y = 30 }
+				clicksound = click_checkbox
+			}
+			instantTextBoxType = {
+				name = "buy_type_stealth_destroyer_text"
+				position = { x = 10 y = 5 }
+				font = "hoi_18mbs"
+				text = "SHIP_MARKET_STEALTH_DESTROYER"
+				maxWidth = 280
+				maxHeight = 25
+				fixedsize = yes
+				alwaystransparent = yes
+			}
+			iconType = {
+				name = "buy_type_stealth_destroyer_selected"
+				position = { x = 270 y = 5 }
+				spriteType = "GFX_checkbox_default"
+				frame = 2
+				alwaystransparent = yes
+			}
+			instantTextBoxType = {
+				name = "buy_type_stealth_destroyer_avail"
+				position = { x = 310 y = 5 }
+				font = "hoi_18mbs"
+				text = "([?buy_avail_stealth_destroyer|0])"
+				maxWidth = 90
+				maxHeight = 25
+				format = left
+				alwaystransparent = yes
+			}
+		}
+
+		# Stealth Frigate
+		containerWindowType = {
+			name = "buy_type_stealth_frigate_container"
+			position = { x = 20 y = 465 }
+			size = { width = 410 height = 35 }
+
+			buttonType = {
+				name = "buy_type_stealth_frigate_button"
+				position = { x = 0 y = 0 }
+				spriteType = "GFX_tiling_sort_button"
+				frame = 1
+				size = { x = 300 y = 30 }
+				clicksound = click_checkbox
+			}
+			instantTextBoxType = {
+				name = "buy_type_stealth_frigate_text"
+				position = { x = 10 y = 5 }
+				font = "hoi_18mbs"
+				text = "SHIP_MARKET_STEALTH_FRIGATE"
+				maxWidth = 280
+				maxHeight = 25
+				fixedsize = yes
+				alwaystransparent = yes
+			}
+			iconType = {
+				name = "buy_type_stealth_frigate_selected"
+				position = { x = 270 y = 5 }
+				spriteType = "GFX_checkbox_default"
+				frame = 2
+				alwaystransparent = yes
+			}
+			instantTextBoxType = {
+				name = "buy_type_stealth_frigate_avail"
+				position = { x = 310 y = 5 }
+				font = "hoi_18mbs"
+				text = "([?buy_avail_stealth_frigate|0])"
+				maxWidth = 90
+				maxHeight = 25
+				format = left
+				alwaystransparent = yes
+			}
+		}
+
+		# Stealth Corvette
+		containerWindowType = {
+			name = "buy_type_stealth_corvette_container"
+			position = { x = 20 y = 500 }
+			size = { width = 410 height = 35 }
+
+			buttonType = {
+				name = "buy_type_stealth_corvette_button"
+				position = { x = 0 y = 0 }
+				spriteType = "GFX_tiling_sort_button"
+				frame = 1
+				size = { x = 300 y = 30 }
+				clicksound = click_checkbox
+			}
+			instantTextBoxType = {
+				name = "buy_type_stealth_corvette_text"
+				position = { x = 10 y = 5 }
+				font = "hoi_18mbs"
+				text = "SHIP_MARKET_STEALTH_CORVETTE"
+				maxWidth = 280
+				maxHeight = 25
+				fixedsize = yes
+				alwaystransparent = yes
+			}
+			iconType = {
+				name = "buy_type_stealth_corvette_selected"
+				position = { x = 270 y = 5 }
+				spriteType = "GFX_checkbox_default"
+				frame = 2
+				alwaystransparent = yes
+			}
+			instantTextBoxType = {
+				name = "buy_type_stealth_corvette_avail"
+				position = { x = 310 y = 5 }
+				font = "hoi_18mbs"
+				text = "([?buy_avail_stealth_corvette|0])"
+				maxWidth = 90
+				maxHeight = 25
+				format = left
+				alwaystransparent = yes
+			}
+		}
+
+		### Selected type display
+		instantTextBoxType = {
+			name = "buy_selected_type_label"
+			position = { x = 20 y = 543 }
+			font = "hoi_18mbs"
+			text = "SHIP_BUY_SELECTED_TYPE"
+			maxWidth = 410
+			maxHeight = 25
+			format = left
+		}
+
+		### Quantity controls
+		containerWindowType = {
+			name = "buy_quantity_section"
+			position = { x = 20 y = 570 }
+			size = { width = 410 height = 60 }
+
+			# Label
+			instantTextBoxType = {
+				name = "buy_quantity_label"
+				position = { x = 0 y = 8 }
+				font = "hoi_18mbs"
+				text = "SHIP_BUY_QUANTITY"
+				maxWidth = 150
+				maxHeight = 25
+				format = left
+			}
+
+			# Minus button
+			buttonType = {
+				name = "buy_quantity_minus"
+				position = { x = 150 y = 0 }
+				spriteType = "GFX_small_minus_button"
+				clicksound = click_scroll
+			}
+
+			# Quantity display
+			instantTextBoxType = {
+				name = "buy_quantity_display"
+				position = { x = 185 y = 8 }
+				font = "hoi_24header"
+				text = "[?buy_quantity|0]"
+				maxWidth = 60
+				maxHeight = 30
+				format = centre
+			}
+
+			# Plus button
+			buttonType = {
+				name = "buy_quantity_plus"
+				position = { x = 250 y = 0 }
+				spriteType = "GFX_small_plus_button"
+				clicksound = click_scroll
+			}
+		}
+
+		### Available display
+		containerWindowType = {
+			name = "buy_available_section"
+			position = { x = 20 y = 620 }
+			size = { width = 410 height = 30 }
+
+			instantTextBoxType = {
+				name = "buy_available_label"
+				position = { x = 0 y = 5 }
+				font = "hoi_18mbs"
+				text = "SHIP_MARKET_AVAILABLE"
+				maxWidth = 200
+				maxHeight = 25
+				format = left
+			}
+			instantTextBoxType = {
+				name = "buy_available_count"
+				position = { x = 200 y = 5 }
+				font = "hoi_18mbs"
+				text = "[?buy_max_available|0]"
+				maxWidth = 60
+				maxHeight = 25
+				format = left
+			}
+		}
+
+		### Action buttons
+		buttonType = {
+			name = "buy_confirm_button"
+			position = { x = 20 y = 675 }
+			quadTextureSprite = "GFX_button_123x34"
+			buttonFont = "hoi_16mbs"
+			buttonText = "SHIP_BUY_CONFIRM"
+			clicksound = click_default
+		}
+
+		buttonType = {
+			name = "buy_back_button"
+			position = { x = 160 y = 675 }
+			quadTextureSprite = "GFX_button_123x34"
+			buttonFont = "hoi_16mbs"
+			buttonText = "SHIP_BUY_BACK"
+			clicksound = click_default
+		}
+
+		buttonType = {
+			name = "buy_cancel_button"
+			position = { x = 300 y = 675 }
+			quadTextureSprite = "GFX_button_123x34"
+			buttonFont = "hoi_16mbs"
+			buttonText = "SHIP_BUY_CANCEL"
+			clicksound = click_close
+		}
+	}
+
+	### Entry template for seller dynamic list (one per seller in seller_list array)
+	### change_scope = yes means scope = seller country
+	containerWindowType = {
+		name = "seller_entry"
+		size = { width = 400 height = 35 }
+
+		buttonType = {
+			name = "seller_entry_button"
+			position = { x = 0 y = 0 }
+			spriteType = "GFX_tiling_sort_button"
+			frame = 1
+			size = { x = 400 y = 30 }
+			clicksound = click_checkbox
+			buttonText = "[Country.GetName]"
+			buttonFont = "hoi_18mbs"
+		}
+	}
+
+	### Entry template for selected seller name display (1 element)
+	containerWindowType = {
+		name = "seller_name_entry"
+		size = { width = 260 height = 30 }
+
+		instantTextBoxType = {
+			name = "seller_name_text"
+			position = { x = 0 y = 5 }
+			font = "hoi_18mbs"
+			text = "[Country.GetName]"
+			maxWidth = 250
+			maxHeight = 25
+		}
+	}
+}

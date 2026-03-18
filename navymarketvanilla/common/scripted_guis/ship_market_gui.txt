@@ -1,0 +1,210 @@
+scripted_gui = {
+	ship_market_gui = {
+		context_type = player_context
+		window_name = "ship_market_window"
+
+		visible = {
+			has_country_flag = ship_market_open
+		}
+
+		effects = {
+			### Close / Cancel — clears GUI state but preserves per-type sale listings
+			close_button_click = {
+				clr_country_flag = ship_market_open
+				clear_variable = sale_type_id
+				clear_variable = ships_for_sale
+				clear_variable = ships_remaining
+				clear_variable = max_ships_available
+			}
+			cancel_button_click = {
+				clr_country_flag = ship_market_open
+				clear_variable = sale_type_id
+				clear_variable = ships_for_sale
+				clear_variable = ships_remaining
+				clear_variable = max_ships_available
+			}
+
+			### Type selection buttons — each sets max_ships_available from navy count
+			type_carrier_button_click = {
+				set_variable = { sale_type_id = 1 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { max_ships_available = num_ships_with_type@carrier }
+				set_variable = { ships_remaining = max_ships_available }
+			}
+			type_battleship_button_click = {
+				set_variable = { sale_type_id = 2 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { max_ships_available = num_ships_with_type@battleship }
+				set_variable = { ships_remaining = max_ships_available }
+			}
+			type_heavy_cruiser_button_click = {
+				set_variable = { sale_type_id = 3 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { max_ships_available = num_ships_with_type@heavy_cruiser }
+				set_variable = { ships_remaining = max_ships_available }
+			}
+			type_light_cruiser_button_click = {
+				set_variable = { sale_type_id = 4 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { max_ships_available = num_ships_with_type@light_cruiser }
+				set_variable = { ships_remaining = max_ships_available }
+			}
+			type_destroyer_button_click = {
+				set_variable = { sale_type_id = 5 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { max_ships_available = num_ships_with_type@destroyer }
+				set_variable = { ships_remaining = max_ships_available }
+			}
+			type_submarine_button_click = {
+				set_variable = { sale_type_id = 6 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { max_ships_available = num_ships_with_type@submarine }
+				set_variable = { ships_remaining = max_ships_available }
+			}
+
+			### Quantity +/- (click = 1, shift = 5), clamped to max_ships_available
+			quantity_plus_click = {
+				add_to_variable = { ships_for_sale = 1 }
+				clamp_variable = { var = ships_for_sale min = 0 max = max_ships_available }
+				set_variable = { ships_remaining = max_ships_available }
+				subtract_from_variable = { ships_remaining = ships_for_sale }
+			}
+			quantity_plus_shift_click = {
+				add_to_variable = { ships_for_sale = 5 }
+				clamp_variable = { var = ships_for_sale min = 0 max = max_ships_available }
+				set_variable = { ships_remaining = max_ships_available }
+				subtract_from_variable = { ships_remaining = ships_for_sale }
+			}
+			quantity_minus_click = {
+				subtract_from_variable = { ships_for_sale = 1 }
+				clamp_variable = { var = ships_for_sale min = 0 max = max_ships_available }
+				set_variable = { ships_remaining = max_ships_available }
+				subtract_from_variable = { ships_remaining = ships_for_sale }
+			}
+			quantity_minus_shift_click = {
+				subtract_from_variable = { ships_for_sale = 5 }
+				clamp_variable = { var = ships_for_sale min = 0 max = max_ships_available }
+				set_variable = { ships_remaining = max_ships_available }
+				subtract_from_variable = { ships_remaining = ships_for_sale }
+			}
+
+			### Confirm sale listing — stores per-type variable, keeps GUI open for next type
+			confirm_button_click = {
+				meta_effect = {
+					text = {
+						set_variable = { ships_selling_[T] = ships_for_sale }
+					}
+					T = "[Root.get_sale_ship_type]"
+				}
+				set_country_flag = selling_ships
+				log = "Ship market: [Root.GetTag] listed [?ships_for_sale] [Root.get_sale_ship_type] for sale"
+				set_variable = { sale_type_id = 0 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { ships_remaining = 0 }
+				set_variable = { max_ships_available = 0 }
+			}
+
+			### Remove listing for currently selected type
+			remove_button_click = {
+				meta_effect = {
+					text = {
+						clear_variable = ships_selling_[T]
+					}
+					T = "[Root.get_sale_ship_type]"
+				}
+				log = "Ship market: [Root.GetTag] removed [Root.get_sale_ship_type] listing"
+				set_variable = { sale_type_id = 0 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { ships_remaining = 0 }
+				set_variable = { max_ships_available = 0 }
+				# Clear selling flag if nothing left listed
+				if = {
+					limit = {
+						NOT = {
+							check_variable = { ships_selling_carrier > 0 }
+							check_variable = { ships_selling_battleship > 0 }
+							check_variable = { ships_selling_heavy_cruiser > 0 }
+							check_variable = { ships_selling_light_cruiser > 0 }
+							check_variable = { ships_selling_destroyer > 0 }
+							check_variable = { ships_selling_submarine > 0 }
+						}
+					}
+					clr_country_flag = selling_ships
+				}
+			}
+		}
+
+		triggers = {
+			### Selected indicators
+			type_carrier_selected_visible = {
+				check_variable = { sale_type_id = 1 }
+			}
+			type_battleship_selected_visible = {
+				check_variable = { sale_type_id = 2 }
+			}
+			type_heavy_cruiser_selected_visible = {
+				check_variable = { sale_type_id = 3 }
+			}
+			type_light_cruiser_selected_visible = {
+				check_variable = { sale_type_id = 4 }
+			}
+			type_destroyer_selected_visible = {
+				check_variable = { sale_type_id = 5 }
+			}
+			type_submarine_selected_visible = {
+				check_variable = { sale_type_id = 6 }
+			}
+
+			### Disable type buttons if you have none of that type
+			type_carrier_button_click_enabled = {
+				has_navy_size = { unit = carrier size > 0 }
+			}
+			type_battleship_button_click_enabled = {
+				has_navy_size = { unit = battleship size > 0 }
+			}
+			type_heavy_cruiser_button_click_enabled = {
+				has_navy_size = { unit = heavy_cruiser size > 0 }
+			}
+			type_light_cruiser_button_click_enabled = {
+				has_navy_size = { unit = light_cruiser size > 0 }
+			}
+			type_destroyer_button_click_enabled = {
+				has_navy_size = { unit = destroyer size > 0 }
+			}
+			type_submarine_button_click_enabled = {
+				has_navy_size = { unit = submarine size > 0 }
+			}
+
+			### Quantity buttons
+			quantity_plus_click_enabled = {
+				has_variable = sale_type_id
+				check_variable = { sale_type_id > 0 }
+				check_variable = { ships_for_sale < max_ships_available }
+			}
+			quantity_minus_click_enabled = {
+				has_variable = sale_type_id
+				check_variable = { ships_for_sale > 0 }
+			}
+
+			### Confirm only if type selected and quantity > 0
+			confirm_button_click_enabled = {
+				has_variable = sale_type_id
+				check_variable = { sale_type_id > 0 }
+				check_variable = { ships_for_sale > 0 }
+			}
+
+			### Remove only if selected type has an existing listing
+			remove_button_click_enabled = {
+				check_variable = { sale_type_id > 0 }
+				OR = {
+					AND = { check_variable = { sale_type_id = 1 } check_variable = { ships_selling_carrier > 0 } }
+					AND = { check_variable = { sale_type_id = 2 } check_variable = { ships_selling_battleship > 0 } }
+					AND = { check_variable = { sale_type_id = 3 } check_variable = { ships_selling_heavy_cruiser > 0 } }
+					AND = { check_variable = { sale_type_id = 4 } check_variable = { ships_selling_light_cruiser > 0 } }
+					AND = { check_variable = { sale_type_id = 5 } check_variable = { ships_selling_destroyer > 0 } }
+					AND = { check_variable = { sale_type_id = 6 } check_variable = { ships_selling_submarine > 0 } }
+				}
+			}
+		}
+	}
+}
