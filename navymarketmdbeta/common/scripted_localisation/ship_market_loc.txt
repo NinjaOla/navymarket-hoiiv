@@ -1,0 +1,233 @@
+### Token scripted locs (used by meta_effect for transfer_ship type resolution)
+defined_text = {
+    name = get_buy_ship_type
+    text = {
+        trigger = { check_variable = { buy_type_id = 1 } }
+        localization_key = "ship_token_carrier"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 2 } }
+        localization_key = "ship_token_destroyer"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 3 } }
+        localization_key = "ship_token_frigate"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 4 } }
+        localization_key = "ship_token_corvette"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 5 } }
+        localization_key = "ship_token_cruiser"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 6 } }
+        localization_key = "ship_token_attack_submarine"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 7 } }
+        localization_key = "ship_token_missile_submarine"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 8 } }
+        localization_key = "ship_token_helicopter_operator"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 9 } }
+        localization_key = "ship_token_battleship"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 10 } }
+        localization_key = "ship_token_battle_cruiser"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 11 } }
+        localization_key = "ship_token_stealth_destroyer"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 12 } }
+        localization_key = "ship_token_stealth_frigate"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 13 } }
+        localization_key = "ship_token_stealth_corvette"
+    }
+}
+
+defined_text = {
+    name = get_sale_ship_type
+    text = {
+        trigger = { check_variable = { sale_type_id = 1 } }
+        localization_key = "ship_token_carrier"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 2 } }
+        localization_key = "ship_token_destroyer"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 3 } }
+        localization_key = "ship_token_frigate"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 4 } }
+        localization_key = "ship_token_corvette"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 5 } }
+        localization_key = "ship_token_cruiser"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 6 } }
+        localization_key = "ship_token_attack_submarine"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 7 } }
+        localization_key = "ship_token_missile_submarine"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 8 } }
+        localization_key = "ship_token_helicopter_operator"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 9 } }
+        localization_key = "ship_token_battleship"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 10 } }
+        localization_key = "ship_token_battle_cruiser"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 11 } }
+        localization_key = "ship_token_stealth_destroyer"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 12 } }
+        localization_key = "ship_token_stealth_frigate"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 13 } }
+        localization_key = "ship_token_stealth_corvette"
+    }
+}
+
+### Display name scripted locs (used by GUI for "Selected: [type]" labels)
+defined_text = {
+    name = get_sale_ship_type_display
+    text = {
+        trigger = { check_variable = { sale_type_id = 1 } }
+        localization_key = "SHIP_MARKET_CARRIER"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 2 } }
+        localization_key = "SHIP_MARKET_DESTROYER"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 3 } }
+        localization_key = "SHIP_MARKET_FRIGATE"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 4 } }
+        localization_key = "SHIP_MARKET_CORVETTE"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 5 } }
+        localization_key = "SHIP_MARKET_CRUISER"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 6 } }
+        localization_key = "SHIP_MARKET_ATTACK_SUB"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 7 } }
+        localization_key = "SHIP_MARKET_MISSILE_SUB"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 8 } }
+        localization_key = "SHIP_MARKET_HELO"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 9 } }
+        localization_key = "SHIP_MARKET_BATTLESHIP"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 10 } }
+        localization_key = "SHIP_MARKET_BATTLE_CRUISER"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 11 } }
+        localization_key = "SHIP_MARKET_STEALTH_DESTROYER"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 12 } }
+        localization_key = "SHIP_MARKET_STEALTH_FRIGATE"
+    }
+    text = {
+        trigger = { check_variable = { sale_type_id = 13 } }
+        localization_key = "SHIP_MARKET_STEALTH_CORVETTE"
+    }
+    text = {
+        trigger = { always = yes }
+        localization_key = "SHIP_MARKET_NONE_SELECTED"
+    }
+}
+
+defined_text = {
+    name = get_buy_ship_type_display
+    text = {
+        trigger = { check_variable = { buy_type_id = 1 } }
+        localization_key = "SHIP_MARKET_CARRIER"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 2 } }
+        localization_key = "SHIP_MARKET_DESTROYER"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 3 } }
+        localization_key = "SHIP_MARKET_FRIGATE"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 4 } }
+        localization_key = "SHIP_MARKET_CORVETTE"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 5 } }
+        localization_key = "SHIP_MARKET_CRUISER"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 6 } }
+        localization_key = "SHIP_MARKET_ATTACK_SUB"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 7 } }
+        localization_key = "SHIP_MARKET_MISSILE_SUB"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 8 } }
+        localization_key = "SHIP_MARKET_HELO"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 9 } }
+        localization_key = "SHIP_MARKET_BATTLESHIP"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 10 } }
+        localization_key = "SHIP_MARKET_BATTLE_CRUISER"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 11 } }
+        localization_key = "SHIP_MARKET_STEALTH_DESTROYER"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 12 } }
+        localization_key = "SHIP_MARKET_STEALTH_FRIGATE"
+    }
+    text = {
+        trigger = { check_variable = { buy_type_id = 13 } }
+        localization_key = "SHIP_MARKET_STEALTH_CORVETTE"
+    }
+    text = {
+        trigger = { always = yes }
+        localization_key = "SHIP_MARKET_NONE_SELECTED"
+    }
+}

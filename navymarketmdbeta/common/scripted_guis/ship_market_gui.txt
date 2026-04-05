@@ -1,0 +1,315 @@
+scripted_gui = {
+	ship_market_gui = {
+		context_type = player_context
+		window_name = "ship_market_window"
+
+		visible = {
+			has_country_flag = ship_market_open
+		}
+
+		effects = {
+			### Close / Cancel — clears GUI state but preserves per-type sale listings
+			close_button_click = {
+				clr_country_flag = ship_market_open
+				clear_variable = sale_type_id
+				clear_variable = ships_for_sale
+				clear_variable = ships_remaining
+				clear_variable = max_ships_available
+			}
+			cancel_button_click = {
+				clr_country_flag = ship_market_open
+				clear_variable = sale_type_id
+				clear_variable = ships_for_sale
+				clear_variable = ships_remaining
+				clear_variable = max_ships_available
+			}
+
+			### Type selection buttons — each sets max_ships_available from navy count
+			type_carrier_button_click = {
+				set_variable = { sale_type_id = 1 }
+				set_variable = { ships_for_sale = 0 }
+				# num_ships_with_type@carrier includes helicopter_operator (both share type = carrier)
+				# Subtract helicopter_operator count to get true carriers only
+				set_variable = { max_ships_available = num_ships_with_type@carrier }
+				subtract_from_variable = { max_ships_available = num_ships_with_type@helicopter_operator }
+				clamp_variable = { var = max_ships_available min = 0 }
+				set_variable = { ships_remaining = max_ships_available }
+			}
+			type_destroyer_button_click = {
+				set_variable = { sale_type_id = 2 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { max_ships_available = num_ships_with_type@destroyer }
+				set_variable = { ships_remaining = num_ships_with_type@destroyer }
+			}
+			type_frigate_button_click = {
+				set_variable = { sale_type_id = 3 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { max_ships_available = num_ships_with_type@frigate }
+				set_variable = { ships_remaining = num_ships_with_type@frigate }
+			}
+			type_corvette_button_click = {
+				set_variable = { sale_type_id = 4 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { max_ships_available = num_ships_with_type@corvette }
+				set_variable = { ships_remaining = num_ships_with_type@corvette }
+			}
+			type_cruiser_button_click = {
+				set_variable = { sale_type_id = 5 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { max_ships_available = num_ships_with_type@cruiser }
+				set_variable = { ships_remaining = num_ships_with_type@cruiser }
+			}
+			type_attack_sub_button_click = {
+				set_variable = { sale_type_id = 6 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { max_ships_available = num_ships_with_type@attack_submarine }
+				set_variable = { ships_remaining = num_ships_with_type@attack_submarine }
+			}
+			type_missile_sub_button_click = {
+				set_variable = { sale_type_id = 7 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { max_ships_available = num_ships_with_type@missile_submarine }
+				set_variable = { ships_remaining = num_ships_with_type@missile_submarine }
+			}
+			type_helo_button_click = {
+				set_variable = { sale_type_id = 8 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { max_ships_available = num_ships_with_type@helicopter_operator }
+				set_variable = { ships_remaining = num_ships_with_type@helicopter_operator }
+			}
+			type_battleship_button_click = {
+				set_variable = { sale_type_id = 9 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { max_ships_available = num_ships_with_type@battleship }
+				set_variable = { ships_remaining = num_ships_with_type@battleship }
+			}
+			type_battle_cruiser_button_click = {
+				set_variable = { sale_type_id = 10 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { max_ships_available = num_ships_with_type@battle_cruiser }
+				set_variable = { ships_remaining = num_ships_with_type@battle_cruiser }
+			}
+			type_stealth_destroyer_button_click = {
+				set_variable = { sale_type_id = 11 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { max_ships_available = num_ships_with_type@stealth_destroyer }
+				set_variable = { ships_remaining = num_ships_with_type@stealth_destroyer }
+			}
+			type_stealth_frigate_button_click = {
+				set_variable = { sale_type_id = 12 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { max_ships_available = num_ships_with_type@stealth_frigate }
+				set_variable = { ships_remaining = num_ships_with_type@stealth_frigate }
+			}
+			type_stealth_corvette_button_click = {
+				set_variable = { sale_type_id = 13 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { max_ships_available = num_ships_with_type@stealth_corvette }
+				set_variable = { ships_remaining = num_ships_with_type@stealth_corvette }
+			}
+
+			### Quantity +/- (click = 1, shift = 5), clamped to max_ships_available
+			quantity_plus_click = {
+				add_to_variable = { ships_for_sale = 1 }
+				clamp_variable = { var = ships_for_sale min = 0 max = max_ships_available }
+				set_variable = { ships_remaining = max_ships_available }
+				subtract_from_variable = { ships_remaining = ships_for_sale }
+			}
+			quantity_plus_shift_click = {
+				add_to_variable = { ships_for_sale = 5 }
+				clamp_variable = { var = ships_for_sale min = 0 max = max_ships_available }
+				set_variable = { ships_remaining = max_ships_available }
+				subtract_from_variable = { ships_remaining = ships_for_sale }
+			}
+			quantity_minus_click = {
+				subtract_from_variable = { ships_for_sale = 1 }
+				clamp_variable = { var = ships_for_sale min = 0 max = max_ships_available }
+				set_variable = { ships_remaining = max_ships_available }
+				subtract_from_variable = { ships_remaining = ships_for_sale }
+			}
+			quantity_minus_shift_click = {
+				subtract_from_variable = { ships_for_sale = 5 }
+				clamp_variable = { var = ships_for_sale min = 0 max = max_ships_available }
+				set_variable = { ships_remaining = max_ships_available }
+				subtract_from_variable = { ships_remaining = ships_for_sale }
+			}
+
+			### Confirm sale listing — stores per-type variable, keeps GUI open for next type
+			confirm_button_click = {
+				# Store quantity under ships_selling_<type> (e.g. ships_selling_carrier = 3)
+				meta_effect = {
+					text = {
+						set_variable = { ships_selling_[T] = ships_for_sale }
+					}
+					T = "[Root.get_sale_ship_type]"
+				}
+				set_country_flag = selling_ships
+				log = "Ship market: [Root.GetTag] listed [?ships_for_sale] [Root.get_sale_ship_type] for sale"
+				# Reset selection for next type
+				set_variable = { sale_type_id = 0 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { ships_remaining = 0 }
+				set_variable = { max_ships_available = 0 }
+			}
+
+			### Remove listing for currently selected type
+			remove_button_click = {
+				meta_effect = {
+					text = {
+						clear_variable = ships_selling_[T]
+					}
+					T = "[Root.get_sale_ship_type]"
+				}
+				log = "Ship market: [Root.GetTag] removed [Root.get_sale_ship_type] listing"
+				# Reset selection
+				set_variable = { sale_type_id = 0 }
+				set_variable = { ships_for_sale = 0 }
+				set_variable = { ships_remaining = 0 }
+				set_variable = { max_ships_available = 0 }
+				# Clear selling flag if nothing left listed
+				if = {
+					limit = {
+						NOT = {
+							check_variable = { ships_selling_carrier > 0 }
+							check_variable = { ships_selling_destroyer > 0 }
+							check_variable = { ships_selling_frigate > 0 }
+							check_variable = { ships_selling_corvette > 0 }
+							check_variable = { ships_selling_cruiser > 0 }
+							check_variable = { ships_selling_attack_submarine > 0 }
+							check_variable = { ships_selling_missile_submarine > 0 }
+							check_variable = { ships_selling_helicopter_operator > 0 }
+							check_variable = { ships_selling_battleship > 0 }
+							check_variable = { ships_selling_battle_cruiser > 0 }
+							check_variable = { ships_selling_stealth_destroyer > 0 }
+							check_variable = { ships_selling_stealth_frigate > 0 }
+							check_variable = { ships_selling_stealth_corvette > 0 }
+						}
+					}
+					clr_country_flag = selling_ships
+				}
+			}
+		}
+
+		triggers = {
+			### Selected indicators - show checkbox only for selected type
+			type_carrier_selected_visible = {
+				check_variable = { sale_type_id = 1 }
+			}
+			type_destroyer_selected_visible = {
+				check_variable = { sale_type_id = 2 }
+			}
+			type_frigate_selected_visible = {
+				check_variable = { sale_type_id = 3 }
+			}
+			type_corvette_selected_visible = {
+				check_variable = { sale_type_id = 4 }
+			}
+			type_cruiser_selected_visible = {
+				check_variable = { sale_type_id = 5 }
+			}
+			type_attack_sub_selected_visible = {
+				check_variable = { sale_type_id = 6 }
+			}
+			type_missile_sub_selected_visible = {
+				check_variable = { sale_type_id = 7 }
+			}
+			type_helo_selected_visible = {
+				check_variable = { sale_type_id = 8 }
+			}
+			type_battleship_selected_visible = {
+				check_variable = { sale_type_id = 9 }
+			}
+			type_battle_cruiser_selected_visible = {
+				check_variable = { sale_type_id = 10 }
+			}
+			type_stealth_destroyer_selected_visible = {
+				check_variable = { sale_type_id = 11 }
+			}
+			type_stealth_frigate_selected_visible = {
+				check_variable = { sale_type_id = 12 }
+			}
+			type_stealth_corvette_selected_visible = {
+				check_variable = { sale_type_id = 13 }
+			}
+
+			### Disable type buttons if you have none of that type
+			type_carrier_button_click_enabled = {
+				has_navy_size = { unit = carrier size > 0 }
+			}
+			type_destroyer_button_click_enabled = {
+				has_navy_size = { unit = destroyer size > 0 }
+			}
+			type_frigate_button_click_enabled = {
+				has_navy_size = { unit = frigate size > 0 }
+			}
+			type_corvette_button_click_enabled = {
+				has_navy_size = { unit = corvette size > 0 }
+			}
+			type_cruiser_button_click_enabled = {
+				has_navy_size = { unit = cruiser size > 0 }
+			}
+			type_attack_sub_button_click_enabled = {
+				has_navy_size = { unit = attack_submarine size > 0 }
+			}
+			type_missile_sub_button_click_enabled = {
+				has_navy_size = { unit = missile_submarine size > 0 }
+			}
+			type_helo_button_click_enabled = {
+				has_navy_size = { unit = helicopter_operator size > 0 }
+			}
+			type_battleship_button_click_enabled = {
+				has_navy_size = { unit = battleship size > 0 }
+			}
+			type_battle_cruiser_button_click_enabled = {
+				has_navy_size = { unit = battle_cruiser size > 0 }
+			}
+			type_stealth_destroyer_button_click_enabled = {
+				has_navy_size = { unit = stealth_destroyer size > 0 }
+			}
+			type_stealth_frigate_button_click_enabled = {
+				has_navy_size = { unit = stealth_frigate size > 0 }
+			}
+			type_stealth_corvette_button_click_enabled = {
+				has_navy_size = { unit = stealth_corvette size > 0 }
+			}
+
+			### Quantity buttons - only enabled when a type is selected and within limits
+			quantity_plus_click_enabled = {
+				has_variable = sale_type_id
+				check_variable = { sale_type_id > 0 }
+				check_variable = { ships_for_sale < max_ships_available }
+			}
+			quantity_minus_click_enabled = {
+				has_variable = sale_type_id
+				check_variable = { ships_for_sale > 0 }
+			}
+
+			### Confirm only if type selected and quantity > 0
+			confirm_button_click_enabled = {
+				has_variable = sale_type_id
+				check_variable = { sale_type_id > 0 }
+				check_variable = { ships_for_sale > 0 }
+			}
+
+			### Remove only if selected type has an existing listing
+			remove_button_click_enabled = {
+				check_variable = { sale_type_id > 0 }
+				OR = {
+					AND = { check_variable = { sale_type_id = 1 } check_variable = { ships_selling_carrier > 0 } }
+					AND = { check_variable = { sale_type_id = 2 } check_variable = { ships_selling_destroyer > 0 } }
+					AND = { check_variable = { sale_type_id = 3 } check_variable = { ships_selling_frigate > 0 } }
+					AND = { check_variable = { sale_type_id = 4 } check_variable = { ships_selling_corvette > 0 } }
+					AND = { check_variable = { sale_type_id = 5 } check_variable = { ships_selling_cruiser > 0 } }
+					AND = { check_variable = { sale_type_id = 6 } check_variable = { ships_selling_attack_submarine > 0 } }
+					AND = { check_variable = { sale_type_id = 7 } check_variable = { ships_selling_missile_submarine > 0 } }
+					AND = { check_variable = { sale_type_id = 8 } check_variable = { ships_selling_helicopter_operator > 0 } }
+					AND = { check_variable = { sale_type_id = 9 } check_variable = { ships_selling_battleship > 0 } }
+					AND = { check_variable = { sale_type_id = 10 } check_variable = { ships_selling_battle_cruiser > 0 } }
+					AND = { check_variable = { sale_type_id = 11 } check_variable = { ships_selling_stealth_destroyer > 0 } }
+					AND = { check_variable = { sale_type_id = 12 } check_variable = { ships_selling_stealth_frigate > 0 } }
+					AND = { check_variable = { sale_type_id = 13 } check_variable = { ships_selling_stealth_corvette > 0 } }
+				}
+			}
+		}
+	}
+}

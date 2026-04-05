@@ -1,0 +1,313 @@
+scripted_gui = {
+
+	### Phase 1: Seller list — visible when buy_phase = 1
+	ship_buy_sellers_gui = {
+		context_type = player_context
+		window_name = "ship_buy_sellers_window"
+		dirty = buy_gui_dirty
+
+		visible = {
+			has_country_flag = buy_market_open
+			check_variable = { buy_phase = 1 }
+		}
+
+		dynamic_lists = {
+			seller_grid_box = {
+				array = seller_list
+				change_scope = yes
+				value = v
+				index = i
+				entry_container = "seller_entry"
+			}
+		}
+
+		effects = {
+			### Close button
+			buy_close_button_click = {
+				clear_buy_market_vars = yes
+			}
+
+			### Seller entry click — select seller, switch to phase 2
+			seller_entry_button_click = {
+				# Scope = seller country (change_scope = yes), ROOT = player
+				ROOT = {
+					set_variable = { selected_seller = PREV }
+					set_variable = { buy_phase = 2 }
+					set_variable = { buy_type_id = 0 }
+					set_variable = { buy_quantity = 0 }
+					set_variable = { buy_max_available = 0 }
+					load_seller_listings = yes
+					add_to_variable = { buy_gui_dirty = 1 }
+				}
+			}
+
+			### Cancel — close everything
+			buy_cancel_p1_button_click = {
+				clear_buy_market_vars = yes
+			}
+		}
+
+		triggers = {
+			### No sellers message
+			no_sellers_text_visible = {
+				NOT = { check_variable = { seller_list^num > 0 } }
+			}
+		}
+	}
+
+	### Phase 2: Type selection — visible when buy_phase = 2
+	ship_buy_types_gui = {
+		context_type = player_context
+		window_name = "ship_buy_types_window"
+		dirty = buy_gui_dirty
+
+		visible = {
+			has_country_flag = buy_market_open
+			check_variable = { buy_phase = 2 }
+		}
+
+		dynamic_lists = {
+			seller_name_grid_box = {
+				array = selected_seller_list
+				change_scope = yes
+				value = v
+				index = i
+				entry_container = "seller_name_entry"
+			}
+		}
+
+		effects = {
+			### Close button
+			buy_close_button_click = {
+				clear_buy_market_vars = yes
+			}
+
+			### Type selection buttons
+			buy_type_carrier_button_click = {
+				set_variable = { buy_type_id = 1 }
+				set_variable = { buy_quantity = 0 }
+				set_variable = { buy_max_available = buy_avail_carrier }
+				add_to_variable = { buy_gui_dirty = 1 }
+			}
+			buy_type_destroyer_button_click = {
+				set_variable = { buy_type_id = 2 }
+				set_variable = { buy_quantity = 0 }
+				set_variable = { buy_max_available = buy_avail_destroyer }
+				add_to_variable = { buy_gui_dirty = 1 }
+			}
+			buy_type_frigate_button_click = {
+				set_variable = { buy_type_id = 3 }
+				set_variable = { buy_quantity = 0 }
+				set_variable = { buy_max_available = buy_avail_frigate }
+				add_to_variable = { buy_gui_dirty = 1 }
+			}
+			buy_type_corvette_button_click = {
+				set_variable = { buy_type_id = 4 }
+				set_variable = { buy_quantity = 0 }
+				set_variable = { buy_max_available = buy_avail_corvette }
+				add_to_variable = { buy_gui_dirty = 1 }
+			}
+			buy_type_cruiser_button_click = {
+				set_variable = { buy_type_id = 5 }
+				set_variable = { buy_quantity = 0 }
+				set_variable = { buy_max_available = buy_avail_cruiser }
+				add_to_variable = { buy_gui_dirty = 1 }
+			}
+			buy_type_attack_sub_button_click = {
+				set_variable = { buy_type_id = 6 }
+				set_variable = { buy_quantity = 0 }
+				set_variable = { buy_max_available = buy_avail_attack_submarine }
+				add_to_variable = { buy_gui_dirty = 1 }
+			}
+			buy_type_missile_sub_button_click = {
+				set_variable = { buy_type_id = 7 }
+				set_variable = { buy_quantity = 0 }
+				set_variable = { buy_max_available = buy_avail_missile_submarine }
+				add_to_variable = { buy_gui_dirty = 1 }
+			}
+			buy_type_helo_button_click = {
+				set_variable = { buy_type_id = 8 }
+				set_variable = { buy_quantity = 0 }
+				set_variable = { buy_max_available = buy_avail_helicopter_operator }
+				add_to_variable = { buy_gui_dirty = 1 }
+			}
+			buy_type_battleship_button_click = {
+				set_variable = { buy_type_id = 9 }
+				set_variable = { buy_quantity = 0 }
+				set_variable = { buy_max_available = buy_avail_battleship }
+				add_to_variable = { buy_gui_dirty = 1 }
+			}
+			buy_type_battle_cruiser_button_click = {
+				set_variable = { buy_type_id = 10 }
+				set_variable = { buy_quantity = 0 }
+				set_variable = { buy_max_available = buy_avail_battle_cruiser }
+				add_to_variable = { buy_gui_dirty = 1 }
+			}
+			buy_type_stealth_destroyer_button_click = {
+				set_variable = { buy_type_id = 11 }
+				set_variable = { buy_quantity = 0 }
+				set_variable = { buy_max_available = buy_avail_stealth_destroyer }
+				add_to_variable = { buy_gui_dirty = 1 }
+			}
+			buy_type_stealth_frigate_button_click = {
+				set_variable = { buy_type_id = 12 }
+				set_variable = { buy_quantity = 0 }
+				set_variable = { buy_max_available = buy_avail_stealth_frigate }
+				add_to_variable = { buy_gui_dirty = 1 }
+			}
+			buy_type_stealth_corvette_button_click = {
+				set_variable = { buy_type_id = 13 }
+				set_variable = { buy_quantity = 0 }
+				set_variable = { buy_max_available = buy_avail_stealth_corvette }
+				add_to_variable = { buy_gui_dirty = 1 }
+			}
+
+			### Quantity +/- (click = 1, shift = 5)
+			buy_quantity_plus_click = {
+				add_to_variable = { buy_quantity = 1 }
+				clamp_variable = { var = buy_quantity min = 0 max = buy_max_available }
+				add_to_variable = { buy_gui_dirty = 1 }
+			}
+			buy_quantity_plus_shift_click = {
+				add_to_variable = { buy_quantity = 5 }
+				clamp_variable = { var = buy_quantity min = 0 max = buy_max_available }
+				add_to_variable = { buy_gui_dirty = 1 }
+			}
+			buy_quantity_minus_click = {
+				subtract_from_variable = { buy_quantity = 1 }
+				clamp_variable = { var = buy_quantity min = 0 max = buy_max_available }
+				add_to_variable = { buy_gui_dirty = 1 }
+			}
+			buy_quantity_minus_shift_click = {
+				subtract_from_variable = { buy_quantity = 5 }
+				clamp_variable = { var = buy_quantity min = 0 max = buy_max_available }
+				add_to_variable = { buy_gui_dirty = 1 }
+			}
+
+			### Buy button — execute transfer
+			buy_confirm_button_click = {
+				execute_ship_purchase = yes
+				# Reset selection for next purchase
+				set_variable = { buy_type_id = 0 }
+				set_variable = { buy_quantity = 0 }
+				set_variable = { buy_max_available = 0 }
+				add_to_variable = { buy_gui_dirty = 1 }
+			}
+
+			### Back button — return to seller list
+			buy_back_button_click = {
+				set_variable = { buy_phase = 1 }
+				set_variable = { buy_type_id = 0 }
+				set_variable = { buy_quantity = 0 }
+				set_variable = { buy_max_available = 0 }
+				# Refresh seller list in case listings changed
+				populate_seller_slots = yes
+				add_to_variable = { buy_gui_dirty = 1 }
+			}
+
+			### Cancel — close everything
+			buy_cancel_button_click = {
+				clear_buy_market_vars = yes
+			}
+		}
+
+		triggers = {
+			### Type selection indicators
+			buy_type_carrier_selected_visible = {
+				check_variable = { buy_type_id = 1 }
+			}
+			buy_type_destroyer_selected_visible = {
+				check_variable = { buy_type_id = 2 }
+			}
+			buy_type_frigate_selected_visible = {
+				check_variable = { buy_type_id = 3 }
+			}
+			buy_type_corvette_selected_visible = {
+				check_variable = { buy_type_id = 4 }
+			}
+			buy_type_cruiser_selected_visible = {
+				check_variable = { buy_type_id = 5 }
+			}
+			buy_type_attack_sub_selected_visible = {
+				check_variable = { buy_type_id = 6 }
+			}
+			buy_type_missile_sub_selected_visible = {
+				check_variable = { buy_type_id = 7 }
+			}
+			buy_type_helo_selected_visible = {
+				check_variable = { buy_type_id = 8 }
+			}
+			buy_type_battleship_selected_visible = {
+				check_variable = { buy_type_id = 9 }
+			}
+			buy_type_battle_cruiser_selected_visible = {
+				check_variable = { buy_type_id = 10 }
+			}
+			buy_type_stealth_destroyer_selected_visible = {
+				check_variable = { buy_type_id = 11 }
+			}
+			buy_type_stealth_frigate_selected_visible = {
+				check_variable = { buy_type_id = 12 }
+			}
+			buy_type_stealth_corvette_selected_visible = {
+				check_variable = { buy_type_id = 13 }
+			}
+
+			### Type buttons — disabled if seller has 0 of that type
+			buy_type_carrier_button_click_enabled = {
+				check_variable = { buy_avail_carrier > 0 }
+			}
+			buy_type_destroyer_button_click_enabled = {
+				check_variable = { buy_avail_destroyer > 0 }
+			}
+			buy_type_frigate_button_click_enabled = {
+				check_variable = { buy_avail_frigate > 0 }
+			}
+			buy_type_corvette_button_click_enabled = {
+				check_variable = { buy_avail_corvette > 0 }
+			}
+			buy_type_cruiser_button_click_enabled = {
+				check_variable = { buy_avail_cruiser > 0 }
+			}
+			buy_type_attack_sub_button_click_enabled = {
+				check_variable = { buy_avail_attack_submarine > 0 }
+			}
+			buy_type_missile_sub_button_click_enabled = {
+				check_variable = { buy_avail_missile_submarine > 0 }
+			}
+			buy_type_helo_button_click_enabled = {
+				check_variable = { buy_avail_helicopter_operator > 0 }
+			}
+			buy_type_battleship_button_click_enabled = {
+				check_variable = { buy_avail_battleship > 0 }
+			}
+			buy_type_battle_cruiser_button_click_enabled = {
+				check_variable = { buy_avail_battle_cruiser > 0 }
+			}
+			buy_type_stealth_destroyer_button_click_enabled = {
+				check_variable = { buy_avail_stealth_destroyer > 0 }
+			}
+			buy_type_stealth_frigate_button_click_enabled = {
+				check_variable = { buy_avail_stealth_frigate > 0 }
+			}
+			buy_type_stealth_corvette_button_click_enabled = {
+				check_variable = { buy_avail_stealth_corvette > 0 }
+			}
+
+			### Quantity buttons
+			buy_quantity_plus_click_enabled = {
+				check_variable = { buy_type_id > 0 }
+				check_variable = { buy_quantity < buy_max_available }
+			}
+			buy_quantity_minus_click_enabled = {
+				check_variable = { buy_quantity > 0 }
+			}
+
+			### Buy button — type selected and quantity > 0
+			buy_confirm_button_click_enabled = {
+				check_variable = { buy_type_id > 0 }
+				check_variable = { buy_quantity > 0 }
+			}
+		}
+	}
+}

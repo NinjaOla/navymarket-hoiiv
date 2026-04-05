@@ -1,0 +1,3 @@
+ship_market_category = {
+	visible_when_empty = yes
+}

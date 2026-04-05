@@ -1,0 +1,84 @@
+add_namespace = shiptest
+
+# Test 1: Scripted localisation + meta_effect — THE WORKING SOLUTION
+# Chain: set_variable sale_type_id → scripted loc get_sale_ship_type → meta_effect transfer_ship
+# Scripted loc maps numeric id to loc key (ship_token_*) which resolves to raw sub-unit name
+# This eliminates the need for if-chains in transfer logic
+country_event = {
+    id = shiptest.1
+    title = "Test: Scripted Loc + meta_effect transfer"
+    desc = "The confirmed working pattern for dynamic ship transfers"
+    is_triggered_only = yes
+
+    option = {
+        name = "carrier (sale_type_id=1)"
+        set_variable = { sale_type_id = 1 }
+        log = "shiptest.1: type=[Root.get_sale_ship_type], var=[?sale_type_id]"
+        meta_effect = {
+            text = {
+                transfer_ship = { type = [T] target = NOR }
+            }
+            T = "[Root.get_sale_ship_type]"
+            debug = yes
+        }
+    }
+    option = {
+        name = "Cancels"
+    }
+}
+
+# Test 2: Produce stealth ships, battle cruiser, and battleship (99% complete)
+country_event = {
+    id = shiptest.2
+    title = "Test: Produce new ship types"
+    desc = "Adds a production line at 99% for each new ship type. Wait a day for delivery."
+    is_triggered_only = yes
+
+    # Stealth Corvette
+    option = {
+        name = "Stealth Corvette (hull_1)"
+        add_equipment_production = {
+            equipment = { type = stealth_corvette_hull_1 }
+            amount = 1
+            progress = 0.99
+            requested_factories = 1
+        }
+    }
+
+    # Stealth Frigate
+    option = {
+        name = "Stealth Frigate (hull_1)"
+        add_equipment_production = {
+            equipment = { type = stealth_frigate_hull_1 }
+            amount = 1
+            progress = 0.99
+            requested_factories = 1
+        }
+    }
+
+    # Stealth Destroyer
+    option = {
+        name = "Stealth Destroyer (hull_1)"
+        add_equipment_production = {
+            equipment = { type = stealth_destroyer_hull_1 }
+            amount = 1
+            progress = 0.99
+            requested_factories = 1
+        }
+    }
+
+    # Battle Cruiser
+    option = {
+        name = "Battle Cruiser (hull_1)"
+        add_equipment_production = {
+            equipment = { type = battle_cruiser_hull_1 }
+            amount = 1
+            progress = 0.99
+            requested_factories = 1
+        }
+    }
+
+    option = {
+        name = "Cancel"
+    }
+}
