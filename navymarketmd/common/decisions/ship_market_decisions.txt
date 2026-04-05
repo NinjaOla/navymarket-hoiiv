@@ -1,5 +1,8 @@
 ship_market_category = {
 	open_ship_market = {
+		icon = GFX_decision_generic_navy_treaty
+
+		visible = { always = yes }
 
 		available = {
 			NOT = { has_country_flag = ship_market_open }
@@ -14,6 +17,9 @@ ship_market_category = {
 	}
 
 	browse_ship_market = {
+		icon = GFX_decision_generic_navy_treaty
+
+		visible = { always = yes }
 
 		available = {
 			NOT = { has_country_flag = buy_market_open }

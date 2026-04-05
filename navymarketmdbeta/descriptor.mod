@@ -11,3 +11,4 @@ dependencies={
 }
 name="Navy Market: Millennium Dawn Beta"
 supported_version="1.17.*"
+remote_file_id="3700140638"

@@ -23,7 +23,7 @@ country_event = {
         }
     }
     option = {
-        name = "Cancels"
+        name = "Cancel"
     }
 }
 
